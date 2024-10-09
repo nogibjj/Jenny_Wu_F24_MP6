@@ -2,18 +2,18 @@
 [![Python Application Test with Github Actions](https://github.com/nogibjj/Jenny_Wu_F24_MP5/actions/workflows/main.yml/badge.svg)](https://github.com/nogibjj/Jenny_Wu_F24_MP5/actions/workflows/main.yml)
 
 #### Purpose of Project
-In this project, I built a pipeline that connects a publicly available CSV to a SQLite database and executes Create, Read, Update, and Delete (CRUD) operations using SQL syntax in a Python script. These operations could be used in the future to update entries in the database. In this example, each database entry represents a breakdown of every shooting incident that occurred in NYC going back to 2006 through the end of the previous calendar year. 
+
 
 #### Requirements:
 
-- [X] Connect to a SQL database
-- [X] Perform CRUD operations
-- [X] Write at least two different SQL queries
-- [X] Database connection
-- [X] CI/CD pipeline
-- [X] Test each operation works by loading the .db file into your pipeline 
-- [X] README.md
-- [X] Screenshot or log of successful database operations
+- [X] Design a complex SQL query involving joins, aggregation, and sorting
+- [X] Provide an explanation for what the query is doing and the expected results
+
+#### Grading Criteria:
+- Query functionality
+- Explanation and documentation
+- CI/CD pipeline 
+- README.md 
 
 ---
 ##### Folder Navigation
@@ -44,4 +44,3 @@ README.md
 requirements.txt
 
 ##### Screenshots of successful database operations
-![alt text](screenshots/Picture1.png)

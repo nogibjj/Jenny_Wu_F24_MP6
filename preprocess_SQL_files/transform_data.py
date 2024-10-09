@@ -6,11 +6,7 @@ import csv
 
 
 # Loads the CSV file and transforms it into a new SQLite3 database
-def transform(
-    dataset="data/nypd_shooting.csv",
-    db_name="nypd_shooting.db",
-    table_name="nypd_shooting",
-):
+def transform(dataset, db_name, table_name, table_values, num_variables):
     """Transforms and Loads data into the local SQLite3 database"""
 
     try:
@@ -24,33 +20,7 @@ def transform(
 
             # Drop the table if it already exists, then create a new one
             c.execute(f"DROP TABLE IF EXISTS {table_name}")
-            c.execute(
-                f"""
-            CREATE TABLE {table_name} (
-                Incident_Key INTEGER,
-                Occur_Date TEXT,
-                Occur_Time TEXT, 
-                Boro TEXT,
-                Loc_of_occur_desc TEXT, 
-                Precinct NUMBER,
-                Jurisdiction_Code INTEGER,
-                Location_Class_Desc TEXT,
-                Loc_Desc TEXT,
-                Stat_Murder_Flag BOOL,
-                Perp_Age_Group TEXT,
-                Perp_Sex TEXT,
-                Perp_Race TEXT,
-                Vicitm_Age_Group TEXT,
-                Victim_Sex TEXT,
-                Victim_Race TEXT,
-                X_Coord TEXT,
-                Y_Coord TEXT,
-                Latitide_Coord FLOAT,
-                Longitude_Coord FLOAT,
-                Long_Lat FLOAT
-            )
-            """
-            )
+            c.execute(f"CREATE TABLE {table_name} ({table_values})")
 
             # Skip the header
             next(payload)
@@ -62,11 +32,19 @@ def transform(
             ]
 
             # Insert all rows into the table
-            c.executemany(
-                f"INSERT INTO {table_name} VALUES ("
-                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                sanitized_payload,
-            )
+            placeholders = ", ".join(
+                ["?"] * num_variables
+            )  # Create the correct number of placeholders
+
+            # Now construct the SQL query using f-string
+            query = f"INSERT INTO {table_name} VALUES ({placeholders})"
+
+            # Execute the query with the sanitized payload
+            c.executemany(query, sanitized_payload)
+            # c.executemany(
+            #     f"INSERT INTO {table_name} VALUES (""?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            #     sanitized_payload,
+            # )
 
             # Commit the changes and close the connection
             conn.commit()
@@ -78,7 +56,3 @@ def transform(
         print(f"An error occurred: {e}")
 
     return db_name
-
-
-if __name__ == "__main__":
-    transform()

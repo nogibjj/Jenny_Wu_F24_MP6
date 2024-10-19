@@ -1,7 +1,5 @@
 # Data Engineering Mini Project Six
 
-
-
 This repository is created as an assignment from the Data Engineering course, IDS 706. The aim is to create a python script that interacts with an SQL Database.
 
 The requirements are:
@@ -12,3 +10,10 @@ The requirements are:
 
 
 ## The functions and what they do
+extract_data.py
+transform_data.py
+query_data.py
+test_all.py 
+
+## Successful Tests 
+![alt text](Picture1.png)

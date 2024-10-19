@@ -1,58 +1,72 @@
-import sqlite3
+from dotenv import load_dotenv
+from databricks import sql
 import csv
+import os
 
 # This file should take the cvs data and convert it into a database, or .db file
 # performs the CREATE from CRUD operations
 
 
 # Loads the CSV file and transforms it into a new SQLite3 database
-def transform(dataset, db_name, table_name, table_values, num_variables):
+def transform(dataset, table_name, table_parameters):
     """Transforms and Loads data into the local SQLite3 database"""
 
-    try:
-        # Open the CSV file
-        with open(dataset, newline="", encoding="ISO-8859-1") as csvfile:
-            payload = csv.reader(csvfile, delimiter=",")
+    load_dotenv()
+    # Open the CSV file
+    with open(dataset, newline="", encoding="ISO-8859-1") as csvfile:
+        payload = csv.reader(csvfile, delimiter=",")
+        next(payload)
+        sanitized_payload = [
+            tuple(map(lambda x: x.strip() if isinstance(x, str) else x, row))
+            for row in payload
+        ]
 
-            # Connect to the SQLite database (or create it if it doesn't exist)
-            conn = sqlite3.connect(db_name)
-            c = conn.cursor()
+        # Connect to DataBricks database
+    with sql.connect(
+        server_hostname=os.getenv("SERVER_HOSTNAME"),
+        http_path=os.getenv("HTTP_PATH"),
+        access_token=os.getenv("DATABRICKS_KEY"),
+    ) as connection:
+
+        with connection.cursor() as c:
 
             # Drop the table if it already exists, then create a new one
             c.execute(f"DROP TABLE IF EXISTS {table_name}")
-            c.execute(f"CREATE TABLE {table_name} ({table_values})")
+            c.execute(f"CREATE TABLE {table_name} ({table_parameters})")
 
-            # Skip the header
-            next(payload)
+            string_sql = f"INSERT INTO {table_name} VALUES"
+            for i in sanitized_payload:
+                string_sql += "\n" + (str(tuple(i))) + ","
+            string_sql = string_sql[:-1] + ";"
 
-            # Prepare and sanitize data before inserting
-            sanitized_payload = [
-                tuple(map(lambda x: x.strip() if isinstance(x, str) else x, row))
-                for row in payload
-            ]
+            c.execute(string_sql)
+            connection.commit()
+            c.close()
+            print(f"Successfully transformed and loaded {table_name} data!")
+        return "Success"
 
-            # Insert all rows into the table
-            placeholders = ", ".join(
-                ["?"] * num_variables
-            )  # Create the correct number of placeholders
 
-            # Now construct the SQL query using f-string
-            query = f"INSERT INTO {table_name} VALUES ({placeholders})"
+transform(
+    dataset="data/nyed_sat.csv",
+    table_name="jcw131_nyed_sat",
+    table_parameters="""
+    DBN1 STRING,
+    school_name1 STRING,
+    test_takers INTEGER,
+    crit_reading_mean INTEGER,
+    math_mean INTEGER,
+    writing_mean INTEGER 
+    """,
+)
 
-            # Execute the query with the sanitized payload
-            c.executemany(query, sanitized_payload)
-            # c.executemany(
-            #     f"INSERT INTO {table_name} VALUES (""?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            #     sanitized_payload,
-            # )
-
-            # Commit the changes and close the connection
-            conn.commit()
-            print(f"Data loaded successfully into {table_name} table.")
-        c.close()
-        conn.close()
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-    return db_name
+transform(
+    dataset="data/nyed_ap_scores.csv",
+    table_name="jcw131_nyed_ap_score",
+    table_parameters="""
+    DBN2 STRING,
+    school_name2 STRING,
+    ap_test_taker INTEGER,
+    total_exams INTEGER,
+    exams_plus INTEGER
+    """,
+)

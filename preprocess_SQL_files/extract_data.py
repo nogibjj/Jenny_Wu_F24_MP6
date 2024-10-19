@@ -16,4 +16,3 @@ def extract(
         with open(file_path, "wb") as f:
             f.write(r.content)
     return file_path
-

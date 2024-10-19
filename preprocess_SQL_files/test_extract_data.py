@@ -4,12 +4,10 @@ from extract_data import extract
 
 """Asserting that the Data is being extracted from the url"""
 
-url = "https://data.cityofnewyork.us/resource/833y-fsy8.csv?$query=SELECT%0A%20%20%60incident_key%60%2C%0A%20%20%60occur_date%60%2C%0A%20%20%60occur_time%60%2C%0A%20%20%60boro%60%2C%0A%20%20%60precinct%60%2C%0A%20%20%60jurisdiction_code%60%2C%0A%20%20%60statistical_murder_flag%60%2C%0A%20%20%60perp_age_group%60%2C%0A%20%20%60perp_sex%60%2C%0A%20%20%60perp_race%60%2C%0A%20%20%60vic_age_group%60%2C%0A%20%20%60vic_sex%60%2C%0A%20%20%60vic_race%60%0AWHERE%0A%20%20%60occur_date%60%0A%20%20%20%20BETWEEN%20%222006-01-01T19%3A22%3A56%22%20%3A%3A%20floating_timestamp%0A%20%20%20%20AND%20%222006-12-31T19%3A22%3A56%22%20%3A%3A%20floating_timestamp"
-file_path = "data/nypd_shooting.csv"
 
-
-def test_extract(url, file_path):
-    result = extract(url, file_path)
+def test_extract():
+    """this extracts the data from a URL and puts it into a CSV files"""
+    result = extract("https://data.cityofnewyork.us/resource/itfs-ms3e.csv?$query=SELECT%0A%20%20%60dbn%60%2C%0A%20%20%60schoolname%60%2C%0A%20%20%60ap_test_takers_%60%2C%0A%20%20%60total_exams_taken%60%2C%0A%20%20%60number_of_exams_with_scores_3_4_or_5%60%0AWHERE%20%60number_of_exams_with_scores_3_4_or_5%60%20IS%20NOT%20NULL", "data/nyed_ap_scores.csv" )
     assert os.path.exists(result)
 
 

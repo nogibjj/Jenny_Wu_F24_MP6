@@ -1,3 +1,7 @@
+from preprocess_SQL_files.extract_data import extract
+from preprocess_SQL_files.transform_data import transform
+from preprocess_SQL_files.query_data import general_query
+
 extract(
     "https://data.cityofnewyork.us/resource/itfs-ms3e.csv?$query=SELECT%0A%20%20%60dbn%60%2C%0A%20%20%60schoolname%60%2C%0A%20%20%60ap_test_takers_%60%2C%0A%20%20%60total_exams_taken%60%2C%0A%20%20%60number_of_exams_with_scores_3_4_or_5%60%0AWHERE%20%60number_of_exams_with_scores_3_4_or_5%60%20IS%20NOT%20NULL",
     "data/nyed_ap_scores.csv",
@@ -35,7 +39,7 @@ transform(
     """,
 )
 
-result_1 =general_query(
+result_1 = general_query(
     """SELECT overall_grade, AVG(ap_test_taker) AS avg_ap_test_taker
         FROM ids706_data_engineering.default.jcw131_nyed_ap_score
         JOIN ids706_data_engineering.default.jcw131_nyed_schoolscores

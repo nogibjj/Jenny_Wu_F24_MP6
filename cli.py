@@ -2,14 +2,7 @@ import sys
 import argparse
 from preprocess_SQL_files.extract_data import extract
 from preprocess_SQL_files.transform_data import transform
-from preprocess_SQL_files.query_data import (
-    query_create,
-    query_read,
-    query_update,
-    query_delete,
-    query_1,
-    query_2,
-)
+from preprocess_SQL_files.query_data import general_query
 
 
 def handle_arguments(args):
@@ -20,12 +13,7 @@ def handle_arguments(args):
         choices=[
             "extract",
             "transform",
-            "query_create",
-            "query_read",
-            "query_update",
-            "query_delete",
-            "query_1",
-            "query_2",
+            "general_query",
         ],
     )
 
@@ -37,15 +25,11 @@ def handle_arguments(args):
 
     elif args.Functions == "transform":
         parser.add_argument("dataset")
-        parser.add_argument("db_name")
         parser.add_argument("table_name")
+        parser.add_argument("table_parameter")
 
-    elif args.Functions == "query_create":
-        parser.add_argument("dataset")
-        parser.add_argument("table")
-        parser.add_argument("colnames")
-        parser.add_argument("values")
-
+    elif args.Functions == "general_query":
+        parser.add_argument("query")
 
     # parse again
     return parser.parse_args(sys.argv[1:])
@@ -62,10 +46,10 @@ def main():
 
     elif args.Functions == "transform":
         print("Transforming and loading data...")
-        print(transform(args.dataset, args.db_name, args.table_name))
+        print(transform(args.dataset, args.table_name, args.table_parameter))
 
     elif args.Functions == "query_create":
-        print(query_create(args.database, args.table, args.colnames, args.values))
+        print(general_query(args.query))
 
     else:
         print(f"Unknown function: {args.action}")

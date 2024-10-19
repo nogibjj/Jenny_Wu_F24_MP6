@@ -44,4 +44,3 @@ def transform(dataset, table_name, table_parameters):
             c.close()
             print(f"Successfully transformed and loaded {table_name} data!")
         return "Success"
-

@@ -20,6 +20,3 @@ def general_query(query):
             connection.commit()
             c.close()
         return result
-
-
-

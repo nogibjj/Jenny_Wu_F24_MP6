@@ -24,7 +24,7 @@ def transform(dataset, table_name, table_parameters):
         http_path=os.getenv("HTTP_PATH"),
         access_token=os.getenv("DATABRICKS_KEY"),
     )
-    c = connection.cursor()
+    # c = connection.cursor()
 
     # # Drop the table if it already exists, then create a new one
     # c.execute(f"DROP TABLE IF EXISTS {table_name}")
@@ -37,8 +37,8 @@ def transform(dataset, table_name, table_parameters):
 
     # c.execute(string_sql)
     # connection.commit()
-    c.close()
-    connection.close()
+    # c.close()
+    # connection.close()
     # print(f"Successfully transformed and loaded {table_name} data!")
     return "Success"
 

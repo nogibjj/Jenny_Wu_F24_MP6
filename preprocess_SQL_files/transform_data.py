@@ -19,11 +19,36 @@ def transform(dataset, table_name, table_parameters):
             tuple(map(lambda x: x.strip() if isinstance(x, str) else x, row))
             for row in payload
         ]
-    connection = sql.connect(
+
+    # Connect to DataBricks database
+    with sql.connect(
         server_hostname=os.getenv("SERVER_HOSTNAME"),
-        http_path=os.getenv("HTTP_PATH"),
+        http_path=os.getenv("DATABRICKS_HTTPPATH"),
         access_token=os.getenv("DATABRICKS_KEY"),
-    )
+    ) as connection:
+
+        with connection.cursor() as c:
+            # Drop the table if it already exists, then create a new one
+            c.execute(f"DROP TABLE IF EXISTS {table_name}")
+            c.execute(f"CREATE TABLE {table_name} ({table_parameters})")
+
+            string_sql = f"INSERT INTO {table_name} VALUES"
+            for i in sanitized_payload:
+                string_sql += "\n" + (str(tuple(i))) + ","
+            string_sql = string_sql[:-1] + ";"
+
+            c.execute(string_sql)
+            connection.commit()
+            c.close()
+            print(f"Successfully transformed and loaded {table_name} data!")
+    return "Success"
+
+    # LEONARDS CODE
+    # connection = sql.connect(
+    #     server_hostname=os.getenv("SERVER_HOSTNAME"),
+    #     http_path=os.getenv("HTTP_PATH"),
+    #     access_token=os.getenv("DATABRICKS_KEY"),
+    # )
     # c = connection.cursor()
 
     # # Drop the table if it already exists, then create a new one
@@ -40,28 +65,29 @@ def transform(dataset, table_name, table_parameters):
     # c.close()
     # connection.close()
     # print(f"Successfully transformed and loaded {table_name} data!")
-    return "Success"
+    # return "Success"
 
-    #     # Connect to DataBricks database
-    # with sql.connect(
-    #     server_hostname=os.getenv("SERVER_HOSTNAME"),
-    #     http_path=os.getenv("HTTP_PATH"),
-    #     access_token=os.getenv("DATABRICKS_KEY"),
-    # ) as connection:
 
-    #     with connection.cursor() as c:
+# OLD CODE
+#     # Connect to DataBricks database
+# with sql.connect(
+#     server_hostname=os.getenv("SERVER_HOSTNAME"),
+#     http_path=os.getenv("DATABRICKS_HTTPPATH"),
+#     access_token=os.getenv("DATABRICKS_KEY")) as connection:
 
-    #         # Drop the table if it already exists, then create a new one
-    #         c.execute(f"DROP TABLE IF EXISTS {table_name}")
-    #         c.execute(f"CREATE TABLE {table_name} ({table_parameters})")
+#     with connection.cursor() as c:
 
-    #         string_sql = f"INSERT INTO {table_name} VALUES"
-    #         for i in sanitized_payload:
-    #             string_sql += "\n" + (str(tuple(i))) + ","
-    #         string_sql = string_sql[:-1] + ";"
+#         # Drop the table if it already exists, then create a new one
+#         c.execute(f"DROP TABLE IF EXISTS {table_name}")
+#         c.execute(f"CREATE TABLE {table_name} ({table_parameters})")
 
-    #         c.execute(string_sql)
-    #         connection.commit()
-    #         c.close()
-    #         print(f"Successfully transformed and loaded {table_name} data!")
-    #     return "Success"
+#         string_sql = f"INSERT INTO {table_name} VALUES"
+#         for i in sanitized_payload:
+#             string_sql += "\n" + (str(tuple(i))) + ","
+#         string_sql = string_sql[:-1] + ";"
+
+#         c.execute(string_sql)
+#         connection.commit()
+#         c.close()
+#         print(f"Successfully transformed and loaded {table_name} data!")
+#     return "Success"

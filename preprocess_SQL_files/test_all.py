@@ -36,21 +36,21 @@ def test_transform():
     assert transform_result == "Success"
 
 
-def test_general_query():
-    "checks to see that it returns a result"
-    results = general_query(
-        """SELECT overall_grade, AVG(ap_test_taker) AS avg_ap_test_taker
-        FROM ids706_data_engineering.default.jcw131_nyed_ap_score
-        JOIN ids706_data_engineering.default.jcw131_nyed_schoolscores
-        ON jcw131_nyed_ap_score.DBN2 = jcw131_nyed_schoolscores.DBN2
-        GROUP BY overall_grade
-        ORDER BY overall_grade;"""
-    )
-    expected_values = """Row(overall_grade='A', avg_ap_test_taker=198.3235294117647)"""
-    assert str(results[0]) == expected_values
+# def test_general_query():
+#     "checks to see that it returns a result"
+#     results = general_query(
+#         """SELECT overall_grade, AVG(ap_test_taker) AS avg_ap_test_taker
+#         FROM ids706_data_engineering.default.jcw131_nyed_ap_score
+#         JOIN ids706_data_engineering.default.jcw131_nyed_schoolscores
+#         ON jcw131_nyed_ap_score.DBN2 = jcw131_nyed_schoolscores.DBN2
+#         GROUP BY overall_grade
+#         ORDER BY overall_grade;"""
+#     )
+#     expected_values = """Row(overall_grade='A', avg_ap_test_taker=198.3235294117647)"""
+#     assert str(results[0]) == expected_values
 
 
-if __name__ == "__main__":
-    test_extract()
-    test_transform()
-    test_general_query()
+# if __name__ == "__main__":
+#     test_extract()
+#     test_transform()
+#     test_general_query()

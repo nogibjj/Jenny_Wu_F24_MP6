@@ -2,7 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.pytest_cache
+*_cache
+preprocess_SQL_files/__pycache__
+/Users/jw/Desktop/MIDS F24/IDS 706 Data Eng/Jenny_Wu_F24_MP6/preprocess_SQL_files
 
 # Environments
 .env

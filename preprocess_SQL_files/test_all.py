@@ -47,8 +47,7 @@ def test_general_query():
         ORDER BY overall_grade;"""
     )
     expected_values = """Row(overall_grade='A', avg_ap_test_taker=198.3235294117647)"""
-    assert str(results[0]) == expected_values, f"Expected {expected_values} but got {results}"
-
+    assert str(results[0]) == expected_values
 
 if __name__ == "__main__":
     test_extract()

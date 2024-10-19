@@ -52,7 +52,7 @@ def test_transform():
 #     assert str(results[0]) == expected_values
 
 
-# if __name__ == "__main__":
-#     test_extract()
-#     test_transform()
-#     test_general_query()
+if __name__ == "__main__":
+    test_extract()
+    test_transform()
+    # test_general_query()

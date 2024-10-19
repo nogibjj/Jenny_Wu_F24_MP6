@@ -46,29 +46,6 @@ def handle_arguments(args):
         parser.add_argument("colnames")
         parser.add_argument("values")
 
-    elif args.Functions == "query_read":
-        parser.add_argument("dataset")
-        parser.add_argument("table")
-
-    elif args.Functions == "query_update":
-        parser.add_argument("database_name")
-        parser.add_argument("table")
-        parser.add_argument("column")
-        parser.add_argument("new_value", type=int)
-        parser.add_argument("Incident_Key", type=int)
-
-    elif args.Functions == "query_delete":
-        parser.add_argument("database")
-        parser.add_argument("table")
-        parser.add_argument("Incident_Key", type=int)
-
-    elif args.Functions == "query_1":
-        parser.add_argument("database")
-        parser.add_argument("table")
-
-    elif args.Functions == "query_2":
-        parser.add_argument("database")
-        parser.add_argument("table")
 
     # parse again
     return parser.parse_args(sys.argv[1:])
@@ -89,21 +66,6 @@ def main():
 
     elif args.Functions == "query_create":
         print(query_create(args.database, args.table, args.colnames, args.values))
-
-    elif args.Functions == "query_read":
-        print(query_read(args.dataset, args.table))
-
-    elif args.Functions == "query_update":
-        print(query_update(args.database_name, args.table, args.column, args.new_value))
-
-    elif args.action == "query_delete":
-        print(query_delete(args.database, args.table, args.Incident_Key))
-
-    elif args.Functions == "query_1":
-        print(query_1(args.database, args.table))
-
-    elif args.Functions == "query_2":
-        print(query_2(args.database, args.table))
 
     else:
         print(f"Unknown function: {args.action}")

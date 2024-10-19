@@ -22,12 +22,4 @@ def general_query(query):
         return result
 
 
-result_1= general_query(
-    """SELECT A.DBN1
-        FROM ids706_data_engineering.default.jcw131_nyed_sat AS A
-        JOIN ids706_data_engineering.default.jcw131_nyed_ap_scores AS B
-        ON A.DBN1 = B.DBN2;
-            """
-)
 
-print(result_1)

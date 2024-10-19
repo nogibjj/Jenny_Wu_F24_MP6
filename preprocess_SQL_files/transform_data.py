@@ -45,28 +45,3 @@ def transform(dataset, table_name, table_parameters):
             print(f"Successfully transformed and loaded {table_name} data!")
         return "Success"
 
-
-transform(
-    dataset="data/nyed_sat.csv",
-    table_name="jcw131_nyed_sat",
-    table_parameters="""
-    DBN1 STRING,
-    school_name1 STRING,
-    test_takers INTEGER,
-    crit_reading_mean INTEGER,
-    math_mean INTEGER,
-    writing_mean INTEGER 
-    """,
-)
-
-transform(
-    dataset="data/nyed_ap_scores.csv",
-    table_name="jcw131_nyed_ap_score",
-    table_parameters="""
-    DBN2 STRING,
-    school_name2 STRING,
-    ap_test_taker INTEGER,
-    total_exams INTEGER,
-    exams_plus INTEGER
-    """,
-)

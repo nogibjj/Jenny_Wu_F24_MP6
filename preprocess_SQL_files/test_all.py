@@ -1,6 +1,4 @@
 import os
-from databricks import sql
-from dotenv import load_dotenv
 from preprocess_SQL_files.extract_data import extract
 from preprocess_SQL_files.transform_data import transform
 from preprocess_SQL_files.query_data import general_query

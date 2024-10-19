@@ -41,7 +41,6 @@ def transform(dataset, table_name, table_parameters):
     print(f"Successfully transformed and loaded {table_name} data!")
     return "Success"
 
-
     #     # Connect to DataBricks database
     # with sql.connect(
     #     server_hostname=os.getenv("SERVER_HOSTNAME"),

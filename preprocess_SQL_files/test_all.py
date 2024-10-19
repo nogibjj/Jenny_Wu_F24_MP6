@@ -1,7 +1,8 @@
 import os
 from preprocess_SQL_files.extract_data import extract
 from preprocess_SQL_files.transform_data import transform
-from preprocess_SQL_files.query_data import general_query
+
+# from preprocess_SQL_files.query_data import general_query
 
 
 def test_extract():
@@ -46,7 +47,8 @@ def test_transform():
 #         GROUP BY overall_grade
 #         ORDER BY overall_grade;"""
 #     )
-#     expected_values = """Row(overall_grade='A', avg_ap_test_taker=198.3235294117647)"""
+#     expected_values =
+#     """Row(overall_grade='A', avg_ap_test_taker=198.3235294117647)"""
 #     assert str(results[0]) == expected_values
 
 

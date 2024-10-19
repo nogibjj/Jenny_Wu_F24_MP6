@@ -10,15 +10,15 @@ import os
 # Loads the CSV file and transforms it into a new SQLite3 database
 def transform(dataset, table_name, table_parameters):
     """Transforms and Loads data into the local SQLite3 database"""
-    # load_dotenv()
-    # # Open the CSV file
-    # with open(dataset, newline="", encoding="ISO-8859-1") as csvfile:
-    #     payload = csv.reader(csvfile, delimiter=",")
-    #     next(payload)
-    #     sanitized_payload = [
-    #         tuple(map(lambda x: x.strip() if isinstance(x, str) else x, row))
-    #         for row in payload
-    #     ]
+    load_dotenv()
+    # Open the CSV file
+    with open(dataset, newline="", encoding="ISO-8859-1") as csvfile:
+        payload = csv.reader(csvfile, delimiter=",")
+        next(payload)
+        sanitized_payload = [
+            tuple(map(lambda x: x.strip() if isinstance(x, str) else x, row))
+            for row in payload
+        ]
     connection = sql.connect(
         server_hostname=os.getenv("DATABRICKS_SERVER_HOST"),
         http_path=os.getenv("DATABRICKS_SQL_HTTP"),

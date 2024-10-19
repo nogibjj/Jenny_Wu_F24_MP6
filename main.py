@@ -3,12 +3,20 @@ from preprocess_SQL_files.transform_data import transform
 from preprocess_SQL_files.query_data import general_query
 
 extract(
-    "https://data.cityofnewyork.us/resource/itfs-ms3e.csv?$query=SELECT%0A%20%20%60dbn%60%2C%0A%20%20%60schoolname%60%2C%0A%20%20%60ap_test_takers_%60%2C%0A%20%20%60total_exams_taken%60%2C%0A%20%20%60number_of_exams_with_scores_3_4_or_5%60%0AWHERE%20%60number_of_exams_with_scores_3_4_or_5%60%20IS%20NOT%20NULL",
+    """https://data.cityofnewyork.us/resource/itfs-ms3e.csv?$query=SELECT
+       %0A%20%20%60dbn%60%2C%0A%20%20%60schoolname%60%2C%0A%20%20%60ap_test_takers_
+      %60%2C%0A%20%20%60total_exams_taken%60%2C%0A%20%20%60number_of_exams_with_scores_3_4_or_5
+      %60%0AWHERE%20%60number_of_exams_with_scores_3_4_or_5%60%20IS%20NOT%20NULL""",
     "data/nyed_ap_scores.csv",
 )
 
 extract(
-    "https://data.cityofnewyork.us/resource/upwt-zvh3.csv?$query=SELECT%0A%20%20%60dbn%60%2C%0A%20%20%60district%60%2C%0A%20%20%60school%60%2C%0A%20%20%60_2010_2011_overall_grade%60%2C%0A%20%20%60_2010_2011_overall_score%60%2C%0A%20%20%60_2010_2011_progress_category_score%60%2C%0A%20%20%60_2010_2011_progress_grade%60%2C%0A%20%20%60school_level%60%0AWHERE%20%60_2010_2011_overall_grade%60%20IS%20NOT%20NULL",
+    """https://data.cityofnewyork.us/resource/upwt-zvh3.csv?$query=SELECT
+      %0A%20%20%60dbn%60%2C%0A%20%20%60district%60%2C%0A%20%20%60school
+      %60%2C%0A%20%20%60_2010_2011_overall_grade%60%2C%0A%20%20%60_2010_2011_overall_score
+      %60%2C%0A%20%20%60_2010_2011_progress_category_score%60%2C%0A%20%20%60_2010_2011_
+      progress_grade%60%2C%0A%20%20%60school_level%60%0AWHERE%20%60_2010_2011_overall_grade
+      %60%20IS%20NOT%20NULL""",
     "data/nyed_schoolscores.csv",
 )
 

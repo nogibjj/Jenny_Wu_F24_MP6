@@ -9,15 +9,14 @@ def general_query(query):
     """runs a query a user inputs"""
 
     load_dotenv()
-    with sql.connect(
+    connection = sql.connect(
         server_hostname=os.getenv("SERVER_HOSTNAME"),
         http_path=os.getenv("HTTP_PATH"),
         access_token=os.getenv("DATABRICKS_KEY"),
-    ) as connection:
-        with connection.cursor() as c:
-            c.execute(query)
-            result = c.fetchall()
-            connection.commit()
-            c.close()
-        return result
-
+    )
+    c = connection.cursor()
+    c.execute(query)
+    result = c.fetchall()
+    connection.commit()
+    c.close()
+    return result

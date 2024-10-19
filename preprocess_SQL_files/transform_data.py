@@ -20,9 +20,9 @@ def transform(dataset, table_name, table_parameters):
             for row in payload
         ]
     connection = sql.connect(
-        server_hostname=os.getenv("DATABRICKS_SERVER_HOST"),
-        http_path=os.getenv("DATABRICKS_SQL_HTTP"),
-        access_token=os.getenv("DATABRICKS_API_KEY"),
+        server_hostname=os.getenv("SERVER_HOSTNAME"),
+        http_path=os.getenv("HTTP_PATH"),
+        access_token=os.getenv("DATABRICKS_KEY"),
     )
     c = connection.cursor()
 
@@ -33,13 +33,14 @@ def transform(dataset, table_name, table_parameters):
     string_sql = f"INSERT INTO {table_name} VALUES"
     for i in sanitized_payload:
         string_sql += "\n" + (str(tuple(i))) + ","
-        string_sql = string_sql[:-1] + ";"
+    string_sql = string_sql[:-1] + ";"
 
     c.execute(string_sql)
     connection.commit()
     c.close()
     print(f"Successfully transformed and loaded {table_name} data!")
     return "Success"
+
 
     #     # Connect to DataBricks database
     # with sql.connect(

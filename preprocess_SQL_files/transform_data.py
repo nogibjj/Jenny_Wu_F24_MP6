@@ -26,19 +26,20 @@ def transform(dataset, table_name, table_parameters):
     )
     c = connection.cursor()
 
-    # Drop the table if it already exists, then create a new one
-    c.execute(f"DROP TABLE IF EXISTS {table_name}")
-    c.execute(f"CREATE TABLE {table_name} ({table_parameters})")
+    # # Drop the table if it already exists, then create a new one
+    # c.execute(f"DROP TABLE IF EXISTS {table_name}")
+    # c.execute(f"CREATE TABLE {table_name} ({table_parameters})")
 
-    string_sql = f"INSERT INTO {table_name} VALUES"
-    for i in sanitized_payload:
-        string_sql += "\n" + (str(tuple(i))) + ","
-    string_sql = string_sql[:-1] + ";"
+    # string_sql = f"INSERT INTO {table_name} VALUES"
+    # for i in sanitized_payload:
+    #     string_sql += "\n" + (str(tuple(i))) + ","
+    # string_sql = string_sql[:-1] + ";"
 
-    c.execute(string_sql)
-    connection.commit()
+    # c.execute(string_sql)
+    # connection.commit()
     c.close()
-    print(f"Successfully transformed and loaded {table_name} data!")
+    connection.close()
+    # print(f"Successfully transformed and loaded {table_name} data!")
     return "Success"
 
     #     # Connect to DataBricks database

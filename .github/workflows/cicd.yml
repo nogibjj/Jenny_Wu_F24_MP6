@@ -6,13 +6,14 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
+      - uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
       - name: install packages
         run: make install
       - name: test 
@@ -20,13 +21,9 @@ jobs:
           SERVER_HOSTNAME: ${{secrets.SERVER_HOSTNAME}}
           HTTP_PATH: ${{secrets.DATABRICKS_HTTPPATH}}
           ACCESS_TOKEN: ${{secrets.DATABRICKS_KEY}}
-        run: 
-          echo "$HTTP_PATH"
-          echo "$SERVER_HOSTNAME"
+        run: make test
       - name: lint
         run: make lint
-      - name: test 
-        run: make test 
       - name: format
         run: make format
         

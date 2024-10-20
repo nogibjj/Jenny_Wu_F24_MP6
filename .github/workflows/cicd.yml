@@ -20,10 +20,13 @@ jobs:
           SERVER_HOSTNAME: ${{secrets.SERVER_HOSTNAME}}
           HTTP_PATH: ${{secrets.DATABRICKS_HTTPPATH}}
           ACCESS_TOKEN: ${{secrets.DATABRICKS_KEY}}
-        run: make test
+        run: 
+          echo HTTP_PATH
+          echo SERVER_HOSTNAME
       - name: lint
         run: make lint
       - name: test 
         run: make test 
       - name: format
         run: make format
+        

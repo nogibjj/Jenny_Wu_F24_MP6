@@ -21,8 +21,8 @@ jobs:
           HTTP_PATH: ${{secrets.DATABRICKS_HTTPPATH}}
           ACCESS_TOKEN: ${{secrets.DATABRICKS_KEY}}
         run: 
-          echo HTTP_PATH
-          echo SERVER_HOSTNAME
+          echo "$HTTP_PATH"
+          echo "$SERVER_HOSTNAME"
       - name: lint
         run: make lint
       - name: test 

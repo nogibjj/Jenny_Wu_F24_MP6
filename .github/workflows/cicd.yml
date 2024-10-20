@@ -1,29 +1,33 @@
-name: Python Application Test with Github Actions
-'on':
+name: CI
+on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
-  workflow_dispatch: null
+    branches: [ "main" ]
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-python@v3
         with:
           python-version: 3.9
-      - name: install packages
+
+      - name: Install packages
         run: make install
-      - name: test
+
+      - name: Test
         env:
-          SERVER_HOSTNAME: ${{secrets.SERVER_HOSTNAME}}
-          HTTP_PATH: ${{secrets.DATABRICKS_HTTPPATH}}
-          ACCESS_TOKEN: ${{secrets.DATABRICKS_KEY}}
+          DATABRICKS_KEY: ${{ secrets.DATABRICKS_KEY }}
+          SERVER_HOSTNAME: ${{ secrets.SERVER_HOSTNAME }}
+          DATABRICKS_HTTPPATH: ${{ secrets.DATABRICKS_HTTPPATH }}
         run: python preprocess_SQL_files/transform_data.py
-      - name: lint
+
+      - name: Lint
         run: make lint
-      - name: format
+
+      - name: Format
         run: make format

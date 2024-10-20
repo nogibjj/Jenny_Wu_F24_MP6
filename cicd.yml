@@ -1,0 +1,29 @@
+name: Python Application Test with Github Actions
+'on':
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: null
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+      - name: install packages
+        run: make install
+      - name: test
+        env:
+          SERVER_HOSTNAME: '${{secrets.SERVER_HOSTNAME}}'
+          HTTP_PATH: '${{secrets.DATABRICKS_HTTPPATH}}'
+          ACCESS_TOKEN: '${{secrets.DATABRICKS_KEY}}'
+        run: python preprocess_SQL_files/transform_data.py
+      - name: lint
+        run: make lint
+      - name: format
+        run: make format

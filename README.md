@@ -10,7 +10,6 @@ The requirements are:
 3. Design a complex SQL query involving joins, aggregation, and sorting
 4. Provide an explanation for what the query is doing and the expected results
 
-change for push 
 ## The functions and what they do
 extract_data.py
 transform_data.py

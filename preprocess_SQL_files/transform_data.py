@@ -101,3 +101,21 @@ def transform(dataset, table_name, table_parameters):
 #         c.close()
 #         print(f"Successfully transformed and loaded {table_name} data!")
 #     return "Success"
+
+"""this checks to see that the transform works"""
+transform_result = transform(
+    dataset="data/nyed_schoolscores.csv",
+    table_name="jcw131_nyed_schoolscores",
+    table_parameters="""
+    DBN2 STRING,
+    district FLOAT,
+    school_name2 STRING,
+    overall_grade STRING,
+    overall_score FLOAT,
+    progress_score FLOAT,
+    progress_grade STRING,
+    level STRING
+    """,
+    )
+
+assert transform_result == "Success"

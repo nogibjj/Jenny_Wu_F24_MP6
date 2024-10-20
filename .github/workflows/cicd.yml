@@ -21,7 +21,7 @@ jobs:
           SERVER_HOSTNAME: ${{secrets.SERVER_HOSTNAME}}
           HTTP_PATH: ${{secrets.DATABRICKS_HTTPPATH}}
           ACCESS_TOKEN: ${{secrets.DATABRICKS_KEY}}
-        run: make test
+        run: python preprocess_SQL_files/transform_data.py
       - name: lint
         run: make lint
       - name: format

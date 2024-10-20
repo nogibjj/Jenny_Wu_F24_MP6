@@ -45,6 +45,7 @@ def transform(dataset, table_name, table_parameters):
                 for i in sanitized_payload:
                     string_sql += "\n" + (str(tuple(i))) + ","
                 string_sql = string_sql[:-1] + ";"
+                print(string_sql)
 
                 c.execute(string_sql)
                 connection.commit()

@@ -24,7 +24,7 @@ jobs:
           DATABRICKS_KEY: ${{ secrets.DATABRICKS_KEY }}
           SERVER_HOSTNAME: ${{ secrets.SERVER_HOSTNAME }}
           DATABRICKS_HTTPPATH: ${{ secrets.DATABRICKS_HTTPPATH }}
-        run: python preprocess_SQL_files/transform_data.py
+        run: make test
 
       - name: Lint
         run: make lint

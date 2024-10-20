@@ -23,8 +23,6 @@ def transform(dataset, table_name, table_parameters):
     http_path_test = os.getenv("DATABRICKS_HTTPPATH")
     access_token_test = os.getenv("DATABRICKS_KEY")
 
-    print(server_hostname_test, http_path_test, access_token_test)
-
     # Connect to DataBricks database
     with sql.connect(
         server_hostname=server_hostname_test,
@@ -36,7 +34,6 @@ def transform(dataset, table_name, table_parameters):
             c.execute(f"SELECT * FROM {table_name}")
             result = c.fetchall()
             if not result:
-                print("here")
                 # Drop the table if it already exists, then create a new one
                 c.execute(f"DROP TABLE IF EXISTS {table_name}")
                 c.execute(f"CREATE TABLE {table_name} ({table_parameters})")
@@ -52,30 +49,6 @@ def transform(dataset, table_name, table_parameters):
                 c.close()
                 print(f"Successfully transformed and loaded {table_name} data!")
     return "Success"
-
-    # LEONARDS CODE
-    # connection = sql.connect(
-    #     server_hostname=os.getenv("SERVER_HOSTNAME"),
-    #     http_path=os.getenv("HTTP_PATH"),
-    #     access_token=os.getenv("DATABRICKS_KEY"),
-    # )
-    # c = connection.cursor()
-
-    # # Drop the table if it already exists, then create a new one
-    # c.execute(f"DROP TABLE IF EXISTS {table_name}")
-    # c.execute(f"CREATE TABLE {table_name} ({table_parameters})")
-
-    # string_sql = f"INSERT INTO {table_name} VALUES"
-    # for i in sanitized_payload:
-    #     string_sql += "\n" + (str(tuple(i))) + ","
-    # string_sql = string_sql[:-1] + ";"
-
-    # c.execute(string_sql)
-    # connection.commit()
-    # c.close()
-    # connection.close()
-    # print(f"Successfully transformed and loaded {table_name} data!")
-    # return "Success"
 
 
 # OLD CODE
@@ -102,20 +75,3 @@ def transform(dataset, table_name, table_parameters):
 #         print(f"Successfully transformed and loaded {table_name} data!")
 #     return "Success"
 
-"""this checks to see that the transform works"""
-transform_result = transform(
-    dataset="data/nyed_schoolscores.csv",
-    table_name="jcw131_nyed_schoolscores",
-    table_parameters="""
-    DBN2 STRING,
-    district FLOAT,
-    school_name2 STRING,
-    overall_grade STRING,
-    overall_score FLOAT,
-    progress_score FLOAT,
-    progress_grade STRING,
-    level STRING
-    """,
-    )
-
-assert transform_result == "Success"

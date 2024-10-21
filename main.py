@@ -51,7 +51,7 @@ transform(
 )
 
 result_1 = general_query(
-    """SELECT overall_grade, AVG(exams_plus) AS avg_ap_test_taker
+    """SELECT overall_grade, AVG(ap_test_taker) AS avg_ap_test_taker
         FROM ids706_data_engineering.default.jcw131_nyed_ap_score
         JOIN ids706_data_engineering.default.jcw131_nyed_schoolscores
         ON jcw131_nyed_ap_score.DBN2 = jcw131_nyed_schoolscores.DBN2
@@ -63,7 +63,7 @@ result_1 = general_query(
 print(result_1)
 
 result_2 = general_query(
-    """SELECT overall_grade, MIN(ap_test_taker) AS avg_ap_test_taker
+    """SELECT overall_grade, AVG(exams_plus) AS avg_exam_plus
         FROM ids706_data_engineering.default.jcw131_nyed_ap_score
         JOIN ids706_data_engineering.default.jcw131_nyed_schoolscores
         ON jcw131_nyed_ap_score.DBN2 = jcw131_nyed_schoolscores.DBN2
@@ -75,7 +75,7 @@ result_2 = general_query(
 print(result_2)
 
 result_3 = general_query(
-    """SELECT overall_grade, MAX(ap_test_taker) AS avg_ap_test_taker
+    """SELECT overall_grade, MIN(ap_test_taker) AS min_ap_test_taker
         FROM ids706_data_engineering.default.jcw131_nyed_ap_score
         JOIN ids706_data_engineering.default.jcw131_nyed_schoolscores
         ON jcw131_nyed_ap_score.DBN2 = jcw131_nyed_schoolscores.DBN2
@@ -85,3 +85,15 @@ result_3 = general_query(
 )
 
 print(result_3)
+
+result_4 = general_query(
+    """SELECT overall_grade, MAX(ap_test_taker) AS max_ap_test_taker
+        FROM ids706_data_engineering.default.jcw131_nyed_ap_score
+        JOIN ids706_data_engineering.default.jcw131_nyed_schoolscores
+        ON jcw131_nyed_ap_score.DBN2 = jcw131_nyed_schoolscores.DBN2
+        GROUP BY overall_grade
+        ORDER BY overall_grade;
+        """
+)
+
+print(result_4)

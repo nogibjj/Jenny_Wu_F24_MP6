@@ -1,8 +1,4 @@
 {
-  "code" : "query.compiler.malformed",
   "error" : true,
-  "message" : "Could not parse SoQL query \"SELECT\n       \n  `dbn`,\n  `schoolname`,\n  `ap_test_takers_\n      `,\n  `total_exams_taken`,\n  `number_of_exams_with_scores_3_4_or_5\n      `\nWHERE `number_of_exams_with_scores_3_4_or_5` IS NOT NULL\": Unexpected character:\n  `ap_test_takers_\n                  ^",
-  "data" : {
-    "query" : "SELECT\n       \n  `dbn`,\n  `schoolname`,\n  `ap_test_takers_\n      `,\n  `total_exams_taken`,\n  `number_of_exams_with_scores_3_4_or_5\n      `\nWHERE `number_of_exams_with_scores_3_4_or_5` IS NOT NULL"
-  }
+  "message" : "Unrecognized arguments [\n    $query]"
 }
